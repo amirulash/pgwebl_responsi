@@ -14,7 +14,7 @@ Route::get('/landing', [MapController::class, 'landing'])->name('landing');
 Route::get('/map', [MapController::class, 'map'])->name('index-public');
 Route::get('/table', [MapController::class, 'table'])->name('table');
 
-// Create Point
+// Create Point cuk
 Route::post('/store-point', [PointController::class, 'store'])->name('store-point');
 
 //Edit Point
