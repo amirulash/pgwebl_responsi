@@ -4,7 +4,7 @@
     <div class="container mt-4">
         <div class="card">
             <div class="card-header text-center">
-                <h2> Data Point</h2>
+                <h2> Daftar Destinasi Wisata</h2>
             </div>
             <style>
                 .card-header {
