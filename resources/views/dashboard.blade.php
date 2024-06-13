@@ -5,35 +5,74 @@
         </h2>
     </x-slot>
 
-    <div class="container py-12">
-        <div class="card shadow">
-            <div class="card-header">
-                <h3 class="card-title">Data</h3>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <div class="alert alert-primary" role="alert">
-                            <h4><i class="fa-solid fa-location-dot"></i> Total Point</h4>
-                            <p style="font-size: 28pt" id="totalPoints">{{ $total_points }}</p>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="alert alert-success" role="alert">
-                            <h4><i class="fa-solid fa-route"></i> Total Polyline</h4>
-                            <p style="font-size: 28pt" id="totalPolylines">{{ $total_polylines }}</p>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="alert alert-warning" role="alert">
-                            <h4><i class="fa-solid fa-draw-polygon"></i> Total Polygon</h4>
-                            <p style="font-size: 28pt" id="totalPolygons">{{ $total_polygons }}</p>
-                        </div>
-                    </div>
+    <style>
+        .dashboard-container {
+            background-image: url('storage/images/Watukarung.jpg'); /* Ganti dengan path gambar yang sesuai */
+            background-size: cover;
+            background-position: center;
+            padding: 40px 0; /* Sesuaikan padding agar konten tetap terlihat baik */
+            color: #333; /* Warna teks */
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.9); /* Warna latar belakang kartu dengan transparansi */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Efek bayangan kartu */
+        }
+
+        .card-header {
+            background-color: #f8f9fa; /* Warna latar belakang header kartu */
+            border-bottom: 1px solid #ddd; /* Garis pemisah */
+            padding: 10px 15px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            margin-bottom: 0;
+        }
+
+        .alert {
+            margin-bottom: 20px;
+        }
+
+        .alert h4 {
+            margin-bottom: 5px;
+        }
+    </style>
+
+    <div class="dashboard-container">
+        <div class="container">
+            <div class="card shadow">
+                <div class="card-header text-center">
+                    <h3 class="card-title"><b>Feature On Map</b> </h3>
                 </div>
-                <hr>
-                <p> Anda Login Sebagai <b>{{ Auth::user()->name }}</b> dengan email
-                <i>{{Auth::user()->email}}</i></p>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="alert alert-primary" role="alert">
+                                <h4><i class="fa-solid fa-location-dot"></i> Total Titik Pariwisata</h4>
+                                <p style="font-size: 28pt" id="totalPoints">{{ $total_points }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="alert alert-success" role="alert">
+                                <h4><i class="fa-solid fa-route"></i> Total Jalan</h4>
+                                <p style="font-size: 28pt" id="totalPolylines">{{ $total_polylines }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="alert alert-warning" role="alert">
+                                <h4><i class="fa-solid fa-draw-polygon"></i> Total Area</h4>
+                                <p style="font-size: 28pt" id="totalPolygons">{{ $total_polygons }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <p> Anda Login Sebagai <b>{{ Auth::user()->name }}</b> dengan email
+                    <i>{{Auth::user()->email}}</i></p>
                 </div>
             </div>
         </div>
@@ -53,61 +92,5 @@
 
         const hiddenElements = document.querySelectorAll('.hidden');
         hiddenElements.forEach((el) => observer.observe(el));
-
-        // Add a counter effect
-        const totalPointsElement = document.getElementById('totalPoints');
-        const totalPolylinesElement = document.getElementById('totalPolylines');
-        const totalPolygonsElement = document.getElementById('totalPolygons');
-
-        const totalPoints = parseInt(totalPointsElement.textContent);
-        const totalPolylines = parseInt(totalPolylinesElement.textContent);
-        const totalPolygons = parseInt(totalPolygonsElement.textContent);
-
-        let count1 = 0;
-        let count2 = 0;
-        let count3 = 0;
-
-        const countUp1 = setInterval(() => {
-            count1++;
-            totalPointsElement.textContent = count1;
-
-            if (count1 === totalPoints) {
-                clearInterval(countUp1);
-            }
-        }, 10);
-
-        const countUp2 = setInterval(() => {
-            count2++;
-            totalPolylinesElement.textContent = count2;
-
-            if (count2 === totalPolylines) {
-                clearInterval(countUp2);
-            }
-        }, 10);
-
-        const countUp3 = setInterval(() => {
-            count3++;
-            totalPolygonsElement.textContent = count3;
-
-            if (count3 === totalPolygons) {
-                clearInterval(countUp3);
-            }
-        }, 10);
     </script>
-
-    <style>
-        .hidden {
-            opacity: 0;
-            filter: blur(5px);
-            transform: translateX(-100%);
-            transition: all 1s;
-        }
-
-        .show {
-            opacity: 1;
-            filter: blur(0);
-            transform: translateX(0);
-        }
-    </style>
 </x-app-layout>
-

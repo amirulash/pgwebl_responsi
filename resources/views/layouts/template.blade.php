@@ -22,9 +22,9 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background: #00ff66; border-bottom:5px solid #92b1b7;">
+    <nav class="navbar navbar-expand-lg" style="background: #078f93; border-bottom:5px solid #92b1b7;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><i class="fa-solid fa-earth-americas"></i> {{ $title }}</a>
+            <a class="navbar-brand" href="#"><i class="fa-solid fa-earth-americas"></i> </i> <b>{{ $title }}</b></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -35,55 +35,37 @@
                         <a class="nav-link active" aria-current="page" href="{{ route('landing') }}"><i
                                 class="fa-solid fa-house-fire"></i> Home</a>
                     </li>
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false"><i class="fa-solid fa-table"></i> Table </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="table-point"><i class="fa-solid fa-table"></i> Table
-                                    Point<a></li>
-                            <li><a class="dropdown-item" href="table-polyline"><i class="fa-solid fa-table"></i> Table
-                                    Polyline</a></li>
-                            <li><a class="dropdown-item" href="table-polygon"><i class="fa-solid fa-table"></i> Table
-                                    Polygon</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                    data-bs-target="#infoModal"><i class="fa-solid fa-info"></i> Info</a></li>
+                            <li><a class="dropdown-item" href="table-point"><i class="fa-solid fa-table"></i> Table Destinasi Wisata</a></li>
+                            {{-- <li><a class="dropdown-item" href="table-polyline"><i class="fa-solid fa-table"></i> Table Polyline</a></li>
+                            <li><a class="dropdown-item" href="table-polygon"><i class="fa-solid fa-table"></i> Table Polygon</a></li> --}}
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href=""  data-bs-toggle="modal" data-bs-target="#infoModal"><i class="fa-solid fa-info"></i> Info</a></li>
                         </ul>
                     </li>
-
-                    </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#infoModal"><i
-                                class="fa-solid fa-info"></i> Info</a>
+                        <a class="nav-link" href="{{ route('index-public') }}"  data-bs-target="#infoModal"><i class="fa-solid fa-map-location-dot"></i> Map</a>
                     </li>
 
 
                     @if (Auth::check())
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('dashboard') }}"><i class="fa-solid fa-user"></i>
-                                Dashboard</a>
+                            <a class="nav-link" href="{{ route('dashboard') }}"><i class="fa-solid fa-user"></i> Dashboard</a>
                         </li>
-
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <li class="nav-item">
-                                <button class="nav-link text-danger" type="submit"><i
-                                        class="fa-solid fa-right-from-bracket"></i>
-                                    Logout</button>
+                                <button class="nav-link text-danger" type="submit"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
                             </li>
                         </form>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link text-primary" href="{{ route('login') }}"><i
-                                    class="fa-solid fa-right-to-bracket"></i>
-                                Login</a>
+                            <a class="nav-link text-primary" href="{{ route('login') }}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
                         </li>
                     @endif
-
-
                 </ul>
             </div>
         </div>
@@ -94,7 +76,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">INPONE INPO</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Informasi Pengembang</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

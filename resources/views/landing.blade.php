@@ -14,7 +14,7 @@
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" />
 
-    /
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
@@ -61,7 +61,7 @@
                     Pesona kota 1001 Goa
                 </p>
                 <p>
-                    <a href="{{ route('index-public') }}"class="tombol">Get to Know</a>
+                    <a href="{{ route('index-public') }}"class="tombol">Map</a>
                 </p>
             </div>
         </header>
@@ -192,7 +192,7 @@
             <footer id="contact">
 
                 <div class="layar-dalam">
-                    <div class="copyright">&copy; 2023 Sistem Informasi Pariwisata Pacitan</div>
+                    <div class="copyright">&copy; 2024 Sistem Informasi Pariwisata Pacitan</div>
                 </div>
             </footer>
     </div>

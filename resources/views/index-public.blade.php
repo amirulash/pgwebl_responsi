@@ -26,53 +26,13 @@
 @section('script')
     <script>
         // Membuat peta menggunakan Leaflet
-        var map = L.map('map').setView([-8.13333, 111.16667], 11.25);
+        var map = L.map('map').setView([-8.13333, 111.16667], 10.25);
 
         // Menambahkan tile layer (misalnya dari OpenStreetMap)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-        /* Load GeoJSON */
-        fetch('storage/geojson/Admin_Pacitan.geojson')
-            .then(response => response.json())
-            .then(data => {
-                L.geoJSON(data, {
-                    style: function(feature) {
-                        return {
-                            opacity: 1,
-                            color: "black",
-                            weight: 0.5,
-                            fillOpacity: 0.7,
-                            fillColor: getRandomColor(),
-                        };
-                    },
-                    onEachFeature: function(feature, layer) {
-                        var content = "Kecamatan: " + feature.properties.WADMKC;
-                        layer.on({
-                            click: function(e) {
-                                // Fungsi ketika objek diklik
-                                layer.bindPopup(content).openPopup();
-                            },
-                            mouseover: function(e) {
-                                // Tidak ada perubahan warna saat mouse over
-                                layer.bindPopup("Kecamatan " + feature.properties.WADMKC, {
-                                    sticky: false
-                                }).openPopup();
-                            },
-                            mouseout: function(e) {
-                                // Fungsi ketika mouse keluar dari objek
-                                layer.resetStyle(e
-                                    .target); // Mengembalikan gaya garis ke gaya awal
-                                map.closePopup(); // Menutup popup
-                            },
-                        });
-                    }
 
-                }).addTo(map);
-            })
-            .catch(error => {
-                console.error('Error loading the GeoJSON file:', error);
-            });
         /* Tile Basemap */
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             maxZoom: 19,
@@ -114,6 +74,14 @@
 
         L.control.layers(baseMaps).addTo(map);
 
+         // marker wisata
+         var markerwisata = L.icon({
+            iconUrl: 'storage/images/wisata.png',
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30]
+        })
+
         /* Scale Bar */
         L.control
             .scale({
@@ -149,20 +117,23 @@
 
        // GeoJSON Point
        var point = L.geoJson(null, {
+            pointToLayer: function(feature, latlng) {
+                return L.marker(latlng, {
+                    icon: markerwisata
+                });
+            },
             onEachFeature: function(feature, layer) {
-                var popupContent = "Nama: " + feature.properties.name + "<br>" +
-                    "Deskripsi: " + feature.properties.description + "<br>" +
-                    "Foto: <img src='{{ asset('storage/images/') }}/" + feature.properties.image +
-                    "' class='img-thumbnail' alt='...'>" + "<br>" +
-                    "<div class='d-flex flex-row mt-3'>" +
-                    "<a href='{{ url('edit-point') }}/" + feature.properties.id +
-                    "' class='btn btn-warning me-2'><i class='fa-solid fa-pen-to-square'></i></a>" +
-                    "<form action='{{ url('delete-point') }}/" + feature.properties.id +
-                    "' method='POST' style='display:inline'>" +
-                    '{{ csrf_field() }}' +
-                    '{{ method_field('DELETE') }}' +
-                    "<button type='submit' class='btn btn-danger' onclick='return confirm(\"Yakin Anda akan menghapus data ini?\")'><i class='fa-solid fa-trash-can'></i></button>" +
-                    "</form>" +
+                var popupContent =
+                    "<div style='background-color: #c98226; padding: 15px; border-radius: 5px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); text-align: center; width: 100%; max-width: 250px; height: 50;'>" +
+                    "<h5 style='color:#f0efed; margin: 0 0 10px 0;'> <b>" + feature.properties.name +
+                    "</b></h5>" +
+                    "<p style='color: #f0efed; margin: 0; text-align: center;'> " + feature.properties
+                    .description +
+                    "</p>" +
+                    "<img src='{{ asset('storage/images/') }}/" + feature.properties.image +
+                    "' class='img-thumbnail' alt='' width='200' style='margin-top: 10px;'>";
+                    "</div>" +
+
                     "</div>";
                 layer.on({
                     click: function(e) {
@@ -234,7 +205,7 @@
         });
 
         // Mengambil data GeoJSON dari URL dan menambahkannya ke peta
-        fetch('{{ asset('storage/geojson/Jalan_Pacitan.geojson') }}')
+        fetch('{{ asset('storage/geojson/jalan_garis.geojson') }}')
             .then(response => response.json())
             .then(data => {
                 polyline.addData(data);
@@ -242,65 +213,56 @@
             })
             .catch(error => console.log(error));
 
-        /* GeoJSON Polygon */
+        // GeoJSON Polygon
         var polygon = L.geoJson(null, {
-            /* Style polygon */
             style: function(feature) {
                 return {
-                    color: "#3388ff",
-                    fillColor: "#3388ff",
-                    weight: 2,
                     opacity: 1,
-                    fillOpacity: 0.2,
+                    color: "black",
+                    weight: 0.5,
+                    fillOpacity: 0.7,
+                    fillColor: getRandomColor(),
                 };
             },
             onEachFeature: function(feature, layer) {
-                var popupContent = "Nama: " + feature.properties.name + "<br>" +
-                    "Deskripsi: " + feature.properties.description + "<br>" +
-                    "Foto: <img src='{{ asset('storage/images/') }}/" + feature.properties.image +
-                    "'class='img-thumbnail' alt='...'>" + "<br>" +
-
-                    "<div class='d-flex flex-row'>" +
-
-                    "<a href='{{ url('edit-polygon') }}/" + feature.properties.id +
-                    "' class='btn btn-warning'><i class='fa-solid fa-pen-to-square'></i></a>" +
-
-                    "<form action='{{ url('delete-polygon') }}/" + feature.properties.id + "' method='POST'>" +
-                    '{{ csrf_field() }}' +
-                    '{{ method_field('DELETE') }}' +
-
-                    "<button type='submit' class='btn btn-danger' onclick='return confirm(\"Yakin Anda akan menghapus data ini?\")'><i class='fa-solid fa-trash-can'></i></button>"
-                "</form>"
-
-                "</div>"
-
-                ;
+                var content = "Kecamatan: " + feature.properties.WADMKC;
                 layer.on({
                     click: function(e) {
-                        polygon.bindPopup(popupContent);
+                        // Fungsi ketika objek diklik
+                        layer.bindPopup(content).openPopup();
                     },
                     mouseover: function(e) {
-                        polygon.bindTooltip(feature.properties.name, {
-                            sticky: true,
-                        });
+                        // Tidak ada perubahan warna saat mouse over
+                        layer.bindPopup("Kecamatan " + feature.properties.WADMKC, {
+                            sticky: false
+                        }).openPopup();
+                    },
+                    mouseout: function(e) {
+                        // Fungsi ketika mouse keluar dari objek
+                        layer.resetStyle(e.target); // Mengembalikan gaya garis ke gaya awal
+                        map.closePopup(); // Menutup popup
                     },
                 });
-            },
-        });
-        $.getJSON("{{ route('api.polygons') }}", function(data) {
-            polygon.addData(data);
-            map.addLayer(polygon);
+            }
         });
 
-        // Layer Control
+        // Mengambil data GeoJSON dari URL dan menambahkannya ke layer poligon
+        fetch('storage/geojson/Admin_Pacitan.geojson')
+            .then(response => response.json())
+            .then(data => {
+                polygon.addData(data);
+                map.addLayer(polygon);
+            })
+            .catch(error => {
+                console.error('Error loading the GeoJSON file:', error);
+            });
+        //layer control
         var overlayMaps = {
-            "Point": point,
-            "Polyline": line,
-            "Polygon": polygon
+            "Titik Wisata": point,
+            "Jalan": polyline,
+            "Batas Administrasi": polygon
         };
 
-        var layerControl = L.control.layers(null, overlayMaps, {
-            collapsed: false
-        }).addTo(map);
+        var layerControl = L.control.layers(null, overlayMaps).addTo(map);
     </script>
 @endsection

@@ -26,7 +26,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="PointModalLabel">Edit Point</h1>
+                    <h1 class="modal-title fs-5" id="PointModalLabel">Edit Place</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -131,10 +131,16 @@
 
                 drawnItems.addLayer(layer);
 
-                var popupContent = "Nama: " + feature.properties.name + "<br>" +
-                    "Deskripsi: " + feature.properties.description + "<br>" +
-                    "Foto:<br> <img src='{{ asset('storage/images') }}/" + feature.properties.image +
-                    "' class='img-thumbnail' alt=''width='200'>";
+                var popupContent =
+                    "<div style='background-color: #c98226; padding: 15px; border-radius: 5px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); text-align: center; width: 100%; max-width: 250px; height: 50;'>" +
+                    "<h5 style='color:#f0efed; margin: 0 0 10px 0;'> <b>" + feature.properties.name +
+                    "</b></h5>" +
+                    "<p style='color: #f0efed; margin: 0; text-align: center;'> " + feature.properties
+                    .description +
+                    "</p>" +
+                    "<img src='{{ asset('storage/images/') }}/" + feature.properties.image +
+                    "' class='img-thumbnail' alt='' width='200' style='margin-top: 10px;'>";
+                    "</div>" +
 
                     "</div>";
 
