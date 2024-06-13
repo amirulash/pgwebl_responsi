@@ -20,7 +20,7 @@
 1.[Beberapa Pesona Wisata Kabupaten Pacitan](https://www.liputan6.com/hot/read/5083678/23-tempat-wisata-di-pacitan-selain-gua-cocok-untuk-wisata-keluarga-dan-nongkrong)
 
 >**Screenshot Website**
->![Homepage](public/storage/images/Landing.jpg)
+>![Homepage](/Landing.jpg)
 >![Dashboard](asset/Landing.jpg)
 >![Map](asset/Map.jpg)
 >![Map User](asset/Map.jpg)
